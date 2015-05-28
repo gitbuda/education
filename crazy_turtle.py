@@ -9,6 +9,7 @@ import sys
 
 CARD_SIDES_NO = 4
 BOARD_SIZE = 9
+BOARD_SIZE_Y = 3
 SIDES = list('LTRB')
 
 
@@ -33,6 +34,9 @@ def chunks(l, n):
 
 
 def remove_from_list(l, index):
+    '''
+    Removes element at the index from the list.
+    '''
     return l[:index] + l[index + 1:]
 
 
@@ -50,7 +54,7 @@ def card_rotation(card, angle):
     rotated = rotate(card, angle)
     rotated_card = {}
     for index, side in enumerate(SIDES):
-        rotated_card[side] = rotated[index]
+        rotated_card[side] = int(rotated[index])
     return rotated_card
 
 
@@ -64,15 +68,63 @@ class CTCard:
             self.rotations[angle] = card_rotation(card, angle)
 
 
-def dfs(build, rest):
+def neighbor_card_top(cards, build):
+    '''
+    Returns:
+        top card if exists else None
+    '''
+    index = len(build)
+    if index < BOARD_SIZE_Y:
+        return None
+    card_index = index - BOARD_SIZE_Y
+    neighbor_index, angle = build[card_index]
+    return cards[neighbor_index].rotations[angle]
+
+
+def neighbor_card_left(cards, build):
+    '''
+    Returns:
+        left card if exists else None
+    '''
+    index = len(build)
+    if index % BOARD_SIZE_Y == 0:
+        return None
+    card_index = index - 1
+    neighbor_index, angle = build[card_index]
+    return cards[neighbor_index].rotations[angle]
+
+
+def dfs(cards, build, rest):
+    '''
+    Find the solutions with the DFS algorithm.
+    '''
     if len(build) == 0:
+        # at the start any card could be a solution part
         for index, card in enumerate(rest):
             for angle in range(CARD_SIDES_NO):
-                dfs([(card, angle)], remove_from_list(rest, index))
+                dfs(cards, [(card, angle)], remove_from_list(rest, index))
     elif len(build) == BOARD_SIZE:
-        print build
+        # if DFS reaches leaf of the DFS tree solution is found
+        print 'SOLUTION: %s' % str(map(lambda x: (x[0] + 1, x[1]), build))
     else:
-        print build, rest
+        # call recursive DFS only if top and left card matches
+        for index, card in enumerate(rest):
+            for angle in range(CARD_SIDES_NO):
+                # print 'selection: %d %d' % (card, angle)
+                chosen = cards[card].rotations[angle]
+                neighbor_top = neighbor_card_top(cards, build)
+                neighbor_left = neighbor_card_left(cards, build)
+                doDFS = True
+                if neighbor_top is not None:
+                    if abs(neighbor_top['B'] - chosen['T']) != 4:
+                        doDFS = False
+                if neighbor_left is not None:
+                    if abs(neighbor_left['R'] - chosen['L']) != 4:
+                        doDFS = False
+                if doDFS:
+                    dfs(cards, build + [(card, angle)],
+                        remove_from_list(rest, index))
+
 
 if __name__ == '__main__':
     '''
@@ -80,4 +132,4 @@ if __name__ == '__main__':
     '''
     cards_definition = list(sys.argv[1])
     cards = [CTCard(card) for card in chunks(cards_definition, CARD_SIDES_NO)]
-    dfs([], range(BOARD_SIZE))
+    dfs(cards, [], range(BOARD_SIZE))
