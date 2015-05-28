@@ -3,6 +3,7 @@
 
 '''
 Solution for the crazy turtle game board.
+./crazy_turtle.py 436313711407564402360467264555227520
 '''
 
 import sys
@@ -110,16 +111,15 @@ def dfs(cards, build, rest):
         # call recursive DFS only if top and left card matches
         for index, card in enumerate(rest):
             for angle in range(CARD_SIDES_NO):
-                # print 'selection: %d %d' % (card, angle)
                 chosen = cards[card].rotations[angle]
                 neighbor_top = neighbor_card_top(cards, build)
                 neighbor_left = neighbor_card_left(cards, build)
                 doDFS = True
-                if neighbor_top is not None:
-                    if abs(neighbor_top['B'] - chosen['T']) != 4:
-                        doDFS = False
-                if neighbor_left is not None:
-                    if abs(neighbor_left['R'] - chosen['L']) != 4:
+                if neighbor_top is not None \
+                   and abs(neighbor_top['B'] - chosen['T']) != 4:
+                    doDFS = False
+                if neighbor_left is not None \
+                   and abs(neighbor_left['R'] - chosen['L']) != 4:
                         doDFS = False
                 if doDFS:
                     dfs(cards, build + [(card, angle)],
