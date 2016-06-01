@@ -3,7 +3,7 @@
 
 '''
 Solution for the crazy turtle game board.
-./crazy_turtle.py 436313711407564402360467264555227520
+./crazy_turtles.py 436313711407564402360467264555227520
 '''
 
 import sys
