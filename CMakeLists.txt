@@ -23,3 +23,5 @@ set(EXE_NAME ${ProjectId})
 # add all source files into executable
 add_executable(${EXE_NAME} ${sourceFiles})
 
+enable_testing()
+add_subdirectory(tests)
