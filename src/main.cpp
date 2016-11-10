@@ -2,12 +2,15 @@
 
 #include "counter.hpp"
 #include "lock/lock_one.hpp"
+#include "lock/lock_two.hpp"
 
-Counter<lock::LockOne> lock_one;
+// TODO: write deadlock usecases for the LockOne and LockTwo classes
+// Counter<lock::LockOne> counter_lock;
+Counter<lock::LockTwo> counter_lock;
 
 void get_and_increment()
 {
-    std::cout << lock_one.get_and_increment() << std::endl;
+    std::cout << counter_lock.get_and_increment() << std::endl;
 }
 
 int main()
@@ -18,7 +21,7 @@ int main()
     t1.join();
     t2.join();
 
-    std::cout << lock_one.get_and_increment() << std::endl;
+    std::cout << counter_lock.get_and_increment() << std::endl;
 
     return 0;
 }

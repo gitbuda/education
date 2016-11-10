@@ -6,7 +6,7 @@
 namespace lock
 {
 
-// Not Deadlock Free!
+// deadlocks if thread executions are interleaved
 class LockOne
 {
 private:
