@@ -4,13 +4,15 @@
 #include "lock/lock_one.hpp"
 #include "lock/lock_two.hpp"
 #include "lock/peterson.hpp"
+#include "lock/filter.hpp"
 
 // TODO: rewrite LockOne and LockTwo (because ThreadId is implemented)
 // TODO: write deadlock usecases for the LockOne and LockTwo classes
 // TODO: write long running test for Peterson lock
 // Counter<lock::LockOne> counter_lock;
 // Counter<lock::LockTwo> counter_lock;
-Counter<lock::Peterson> counter_lock;
+// Counter<lock::Peterson> counter_lock;
+Counter<lock::Filter<2>> counter_lock;
 
 void get_and_increment()
 {

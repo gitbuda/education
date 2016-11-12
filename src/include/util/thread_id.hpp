@@ -18,8 +18,10 @@ public:
     size_t get_id()
     {
         auto thread_id = hasher(std::this_thread::get_id());  
+
         if (ids.find(thread_id) == ids.end())
             ids[thread_id] = counter++;
+
         return ids[thread_id];
     }
     
