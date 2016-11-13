@@ -1,19 +1,21 @@
 #pragma once
 
+#include <vector>
+
 #include "util/thread_id.hpp"
 
 namespace lock
 {
 
 // TODO: std::atomic for level and victim
-// TODO: define N in compile OR run time
+// TODO: implementation isn't correct (DEADLOCK + ABORT) -> FIX IT
 
-template <uint64_t N = 2>
 class Filter
 {
 private:
-    std::array<size_t, N> level;
-    std::array<size_t, N> victim;
+    size_t N;
+    std::vector<size_t> level;
+    std::vector<size_t> victim;
 
     bool spin(size_t i, size_t me)
     {
@@ -30,6 +32,8 @@ private:
     }
 
 public:
+    Filter(size_t N) : N(N), level(N, 0), victim(N, 0) {}
+
     void lock()
     {
         auto me = util::ThreadId::instance().get_id();
