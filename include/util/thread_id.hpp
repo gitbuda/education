@@ -49,6 +49,9 @@ public:
 private:
     int counter{0};
     std::hash<std::thread::id> hasher;
+    // TODO: use more appropriate lock
+    //       OR
+    //       use concurrent data structure
     std::unordered_map<int, int> ids;
     std::mutex lock;
 };

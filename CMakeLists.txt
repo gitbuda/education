@@ -23,7 +23,7 @@ message(STATUS "Source files are: ${sourceFiles}")
 # set exe name
 set(EXE_NAME "enter")
 
-set(include_dir "${CMAKE_SOURCE_DIR}/src/include")
+set(include_dir "${CMAKE_SOURCE_DIR}/include")
 include_directories(${include_dir})
 message(STATUS "Included directory is: ${include_dir}")
 

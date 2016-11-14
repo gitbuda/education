@@ -7,11 +7,11 @@
 #include "lock/peterson.hpp"
 #include "lock/filter.hpp"
 
-int THREAD_NO = 100;
+int THREAD_NO = 2;
 
-// TODO: rewrite LockOne and LockTwo (because ThreadId is implemented)
 // TODO: write deadlock usecases for the LockOne and LockTwo classes
-// TODO: write long running test for Peterson lock
+// TODO: write test binaries for all relevant implementations
+// TODO: write long running tests
 // Counter<lock::LockOne> counter_lock;
 // Counter<lock::LockTwo> counter_lock;
 // Counter<lock::Peterson> counter_lock;
