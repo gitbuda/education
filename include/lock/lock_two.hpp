@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cassert>
 #include <atomic>
-#include <thread>
+
+#include "util/thread_id.hpp"
 
 namespace lock
 {
@@ -12,7 +14,9 @@ class LockTwo
 public:
     void lock()
     {
-        auto thread_id = hasher(std::this_thread::get_id());
+        auto thread_id = util::ThreadId::instance().get_id();
+        assert(thread_id <= 1); 
+
         victim.store(thread_id); // let the other go first
         while (victim.load() == thread_id) {} // wait
     }
@@ -20,8 +24,7 @@ public:
     void unlock() {}
 
 private:
-    std::atomic<size_t> victim;
-    std::hash<std::thread::id> hasher;
+    std::atomic<int> victim;
 };
 
 }

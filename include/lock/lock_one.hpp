@@ -1,7 +1,7 @@
 #pragma once
 
-#include <thread>
-#include <unordered_map>
+#include <cassert>
+#include <atomic>
 
 #include "util/thread_id.hpp"
 
@@ -15,20 +15,24 @@ public:
     void lock()
     {
         auto i = util::ThreadId::instance().get_id();
+        assert(i <= 1);
+
         auto j = 1 - i;
-        flags[i] = true;    // I'm interested
-        while (flags[j]) {} // wait
+
+        flags[i].store(true);    // I'm interested
+        while (flags[j].load()) {} // wait
     }
 
     void unlock()
     {
         auto i = util::ThreadId::instance().get_id();
-        flags[i] = false; // unlock
+        assert(i <= 1);
+
+        flags[i].store(false); // unlock
     }
 
 private:
-    std::unordered_map<int, bool> flags;
-    std::hash<std::thread::id> hasher;
+    std::array<std::atomic<bool>, 2> flags;
 };
 
 }

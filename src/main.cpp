@@ -7,7 +7,7 @@
 #include "lock/peterson.hpp"
 #include "lock/filter.hpp"
 
-int THREAD_NO = 2;
+int THREAD_NO = 64;
 
 // TODO: write deadlock usecases for the LockOne and LockTwo classes
 // TODO: write test binaries for all relevant implementations
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
         threads[i].join();
     } 
 
-    std::cout << "COUNT: "<< counter_lock.get() << std::endl;
+    std::cout << "COUNT: " << counter_lock.get() << std::endl;
 
     return 0;
 }
