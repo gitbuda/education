@@ -7,15 +7,20 @@
 namespace lock
 {
 
+// TODO: ints
 // TODO: std::atomic for level and victim
 // TODO: implementation isn't correct (DEADLOCK + ABORT) -> FIX IT
+// TODO: the same problem with atomics
+
+template <typename T>
+using atomic_uptr = std::unique_ptr<std::atomic<T>>;
 
 class Filter
 {
 private:
     size_t N;
-    std::vector<size_t> level;
-    std::vector<size_t> victim;
+    std::vector<atomic_uptr<size_t>> level;
+    std::vector<atomic_uptr<size_t>> victim;
 
     bool spin(size_t i, size_t me)
     {
@@ -24,7 +29,7 @@ private:
         {
             if (k == me) continue;
 
-            auto filter = (level[k] >= i) && (victim[i] == me);
+            auto filter = (level[k]->load() >= i) && (victim[i]->load() == me);
             if (filter) return true;
         }
 
@@ -32,15 +37,24 @@ private:
     }
 
 public:
-    Filter(size_t N) : N(N), level(N, 0), victim(N, 0) {}
+    Filter(size_t N) : N(N)
+    {
+        for (size_t i = 0; i < N; ++i)
+        {
+            level.emplace_back(std::make_unique<std::atomic<size_t>>(0));
+            victim.emplace_back(std::make_unique<std::atomic<size_t>>(0));
+        }
+    }
 
     void lock()
     {
         auto me = util::ThreadId::instance().get_id();
 
         for (uint64_t i = 1; i < N; i++) { //attempt level 1
-            level[me] = i;
-            victim[i] = me;
+            // level[me] = i;
+            // victim[i] = me;
+            level[me]->store(i);
+            victim[i]->store(me);
             while (spin(i, me)) {}
         }
     }
@@ -48,7 +62,8 @@ public:
     void unlock()
     {
         auto me = util::ThreadId::instance().get_id();
-        level[me] = 0;
+        // level[me] = 0;
+        level[me]->store(0);
     }
 
 };
