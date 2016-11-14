@@ -7,25 +7,25 @@
 namespace lock
 {
 
-// TODO: ints
-// TODO: std::atomic for level and victim
-// TODO: implementation isn't correct (DEADLOCK + ABORT) -> FIX IT
-// TODO: the same problem with atomics
-
-template <typename T>
-using atomic_uptr = std::unique_ptr<std::atomic<T>>;
-
 class Filter
 {
 private:
-    size_t N;
-    std::vector<atomic_uptr<size_t>> level;
-    std::vector<atomic_uptr<size_t>> victim;
+    // aliases
+    using id_t = int;
+    using id_atomic_t = std::atomic<id_t>;
+    using id_uptr_t = std::unique_ptr<id_atomic_t>;
+    using id_collection_t = std::vector<id_uptr_t>;
 
-    bool spin(size_t i, size_t me)
+    int N; // number of threads
+
+    // NOTE: here has to be atomic otherwise compiler will make a mess
+    // with reordering
+    id_collection_t level;
+    id_collection_t victim;
+
+    bool is_spinning(int i, int me)
     {
-        // TODO: check this (should i start from 0?)
-        for (uint64_t k = 0; k < N; ++k)
+        for (int k = 0; k < N; ++k)
         {
             if (k == me) continue;
 
@@ -37,12 +37,12 @@ private:
     }
 
 public:
-    Filter(size_t N) : N(N)
+    Filter(int N) : N(N)
     {
-        for (size_t i = 0; i < N; ++i)
+        for (int i = 0; i < N; ++i)
         {
-            level.emplace_back(std::make_unique<std::atomic<size_t>>(0));
-            victim.emplace_back(std::make_unique<std::atomic<size_t>>(0));
+            level.emplace_back(std::make_unique<id_atomic_t>(0));
+            victim.emplace_back(std::make_unique<id_atomic_t>(0));
         }
     }
 
@@ -50,19 +50,16 @@ public:
     {
         auto me = util::ThreadId::instance().get_id();
 
-        for (uint64_t i = 1; i < N; i++) { //attempt level 1
-            // level[me] = i;
-            // victim[i] = me;
+        for (int i = 1; i < N; i++) {
             level[me]->store(i);
             victim[i]->store(me);
-            while (spin(i, me)) {}
+            while (is_spinning(i, me)) {}
         }
     }
 
     void unlock()
     {
         auto me = util::ThreadId::instance().get_id();
-        // level[me] = 0;
         level[me]->store(0);
     }
 

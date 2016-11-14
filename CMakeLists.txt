@@ -12,7 +12,7 @@ find_package(Threads REQUIRED)
 set(CMAKE_CXX_STANDARD 14)
 
 # compiler options
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}-Wall -Werror -fmessage-length=0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -fmessage-length=0")
 
 # add all cpp file recursive into sourceFiles varibale
 file(GLOB_RECURSE sourceFiles ${CMAKE_SOURCE_DIR}/src/*.cpp)

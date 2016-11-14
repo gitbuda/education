@@ -18,6 +18,11 @@ public:
         return ++value;
     } // leave criticl section (quard object is destroyed)
 
+    auto get()
+    {
+        return value;
+    }
+
 private:
     long value {0};
     Lock lock;

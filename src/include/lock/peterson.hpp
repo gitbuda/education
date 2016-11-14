@@ -25,7 +25,7 @@ public:
 
 private:
     std::array<std::atomic<bool>, 2> flag;
-    std::atomic<size_t> victim;
+    std::atomic<int> victim;
 };
 
 }

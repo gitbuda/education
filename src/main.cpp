@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 #include "counter.hpp"
 #include "lock/lock_one.hpp"
@@ -6,7 +7,7 @@
 #include "lock/peterson.hpp"
 #include "lock/filter.hpp"
 
-size_t THREAD_NO = 100;
+int THREAD_NO = 100;
 
 // TODO: rewrite LockOne and LockTwo (because ThreadId is implemented)
 // TODO: write deadlock usecases for the LockOne and LockTwo classes
@@ -21,21 +22,27 @@ void get_and_increment()
     std::cout << counter_lock.get_and_increment() << std::endl;
 }
 
-int main()
+int main(int argc, char **argv)
 {
+    // second argument is thread number
+    if (argc >= 2)
+    {
+        THREAD_NO = std::atoi(argv[1]) ?: THREAD_NO;
+    }
+
     std::thread threads[THREAD_NO];
 
-    for (size_t i = 0; i < THREAD_NO; ++i)
+    for (int i = 0; i < THREAD_NO; ++i)
     {
         threads[i] = std::thread(get_and_increment);
     }
    
-    for (size_t i = 0; i < THREAD_NO; ++i)
+    for (int i = 0; i < THREAD_NO; ++i)
     {
         threads[i].join();
     } 
 
-    std::cout << counter_lock.get_and_increment() << std::endl;
+    std::cout << "COUNT: "<< counter_lock.get() << std::endl;
 
     return 0;
 }

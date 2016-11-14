@@ -15,7 +15,7 @@ private:
         return hasher(std::this_thread::get_id());
     }
 
-    bool wait(size_t thread_id)
+    bool wait(int thread_id)
     {
         for (auto & flag : flags)
         {
@@ -42,7 +42,7 @@ public:
     }
 
 private:
-    std::unordered_map<size_t, bool> flags;
+    std::unordered_map<int, bool> flags;
     std::hash<std::thread::id> hasher;
 };
 
