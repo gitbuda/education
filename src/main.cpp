@@ -7,6 +7,7 @@
 #include "lock/peterson.hpp"
 #include "lock/filter.hpp"
 #include "lock/tas_lock.hpp"
+#include "lock/ttas_lock.hpp"
 
 int THREAD_NO = 64;
 
@@ -17,7 +18,8 @@ int THREAD_NO = 64;
 // Counter<lock::LockTwo> counter_lock;
 // Counter<lock::Peterson> counter_lock;
 // Counter<lock::Filter> counter_lock {lock::Filter(THREAD_NO)};
-Counter<lock::TASLock> counter_lock;
+// Counter<lock::TASLock> counter_lock;
+Counter<lock::TTASLock> counter_lock;
 
 void get_and_increment()
 {
