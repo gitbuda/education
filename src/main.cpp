@@ -9,7 +9,7 @@
 #include "lock/tas_lock.hpp"
 #include "lock/ttas_lock.hpp"
 
-int THREAD_NO = 64;
+const int THREAD_NO = 64;
 
 // TODO: write deadlock usecases for the LockOne and LockTwo classes
 // TODO: write test binaries for all relevant implementations
@@ -28,13 +28,7 @@ void get_and_increment()
 
 int main(int argc, char **argv)
 {
-    // second argument is thread number
-    if (argc >= 2)
-    {
-        THREAD_NO = std::atoi(argv[1]) ?: THREAD_NO;
-    }
-
-    std::thread threads[THREAD_NO];
+    std::array<std::thread, THREAD_NO> threads;
 
     for (int i = 0; i < THREAD_NO; ++i)
     {
