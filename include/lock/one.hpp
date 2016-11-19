@@ -9,7 +9,7 @@ namespace lock
 {
 
 // deadlocks if thread executions are interleaved
-class LockOne
+class OneLock
 {
 public:
     void lock()

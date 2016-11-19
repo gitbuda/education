@@ -2,22 +2,22 @@
 #include <cstdlib>
 
 #include "counter.hpp"
-#include "lock/lock_one.hpp"
-#include "lock/lock_two.hpp"
+
+#include "lock/one.hpp"
+#include "lock/two.hpp"
 #include "lock/peterson.hpp"
+#include "lock/bakery.hpp"
 #include "lock/filter.hpp"
-#include "lock/tas_lock.hpp"
-#include "lock/ttas_lock.hpp"
+#include "lock/tas.hpp"
+#include "lock/ttas.hpp"
 
 const int THREAD_NO = 64;
 
-// TODO: write deadlock usecases for the LockOne and LockTwo classes
-// TODO: write test binaries for all relevant implementations
-// TODO: write long running tests
-// Counter<lock::LockOne> counter_lock;
-// Counter<lock::LockTwo> counter_lock;
-// Counter<lock::Peterson> counter_lock;
-// Counter<lock::Filter> counter_lock {lock::Filter(THREAD_NO)};
+// Counter<lock::OneLock> counter_lock;
+// Counter<lock::TwoLock> counter_lock;
+// Counter<lock::PetersonLock> counter_lock;
+// Counter<lock::FilterLock> counter_lock {lock::FilterLock(THREAD_NO)};
+// Counter<lock::BakeryLock> counter_lock {lock::BakeryLock(THREAD_NO)};
 // Counter<lock::TASLock> counter_lock;
 Counter<lock::TTASLock> counter_lock;
 

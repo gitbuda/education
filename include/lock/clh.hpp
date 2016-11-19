@@ -1,9 +1,9 @@
-#pragma mark
+#pragma once
 
 namespace lock
 {
 
-class ALock
+class CLHLock
 {
     // TODO: implementation
 };

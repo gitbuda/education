@@ -7,7 +7,7 @@
 namespace lock
 {
 
-class Filter
+class FilterLock
 {
 private:
     // aliases
@@ -37,8 +37,11 @@ private:
     }
 
 public:
-    Filter(int N) : N(N)
+    FilterLock(int N) : N(N)
     {
+        level.reserve(N);
+        victim.reserve(N);
+
         for (int i = 0; i < N; ++i)
         {
             level.emplace_back(std::make_unique<id_atomic_t>(0));

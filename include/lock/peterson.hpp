@@ -8,7 +8,7 @@
 namespace lock
 {
 
-class Peterson 
+class PetersonLock
 {
 public:
     void lock()

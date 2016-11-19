@@ -1,9 +1,9 @@
 #pragma once
 
-namespace data_structure
+namespace lock
 {
 
-class Skiplist
+class CompositeFastPathLock
 {
     // TODO: implementation
 };

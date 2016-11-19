@@ -1,4 +1,4 @@
-#pragma mark
+#pragma once
 
 namespace data_structure
 {

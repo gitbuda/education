@@ -9,7 +9,7 @@ namespace lock
 {
 
 // deadlocks if one thread runs completely before the other
-class LockTwo
+class TwoLock
 {
 public:
     void lock()
