@@ -11,6 +11,8 @@
 #include "lock/tas.hpp"
 #include "lock/ttas.hpp"
 
+#include "util/backoff.hpp"
+
 const int THREAD_NO = 64;
 
 // Counter<lock::OneLock> counter_lock;
@@ -41,6 +43,9 @@ int main(int argc, char **argv)
     } 
 
     std::cout << "COUNT: " << counter_lock.get() << std::endl;
+
+    util::Backoff backoff(2000, 3000);
+    backoff.backoff();
 
     return 0;
 }
