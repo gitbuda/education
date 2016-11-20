@@ -1,6 +1,6 @@
 # Algorithms
 
-Dumping ground for all sorts of algorithms.
+Dumping ground for all sort of algorithms.
 
 How to run?
 ```
