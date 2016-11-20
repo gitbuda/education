@@ -5,7 +5,7 @@
 namespace exception
 {
 
-class FullException : public std::runtime_error
+class FullException : public std::exception
 {
 };
 

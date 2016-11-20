@@ -5,7 +5,7 @@
 namespace exception
 {
 
-class EmptyException : public std::runtime_error
+class EmptyException : public std::exception
 {
 };
 

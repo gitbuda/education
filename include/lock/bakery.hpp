@@ -25,7 +25,7 @@ public:
 
     void lock()
     {
-        auto me = util::ThreadId::instance().get_id();
+        auto me = util::ThreadId<>::instance().get_id();
         flag[me] = true;
         label[me] = *std::max_element(label.begin(), label.end()) + 1;
         while (is_spinning(me)) {}
@@ -33,7 +33,7 @@ public:
 
     void unlock()
     {
-        auto me = util::ThreadId::instance().get_id();
+        auto me = util::ThreadId<>::instance().get_id();
         flag[me] = false;
     }
 

@@ -1,10 +1,12 @@
 # TODOs
 
+* add code coverage
+
+* add logging
+
 * deadlock usecase for appropriate algorithms (OneLock, TwoLock, etc.)
 
 * setup clang formatter and linter
-
-* add google test & google benchmark
 
 * start TDD
     * unit tests

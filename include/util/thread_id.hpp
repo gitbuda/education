@@ -11,6 +11,7 @@ namespace util
  * Returns normalized thread ids. Each thread gets his own
  * thread id starting from 0.
  */
+template <class Lock = std::mutex>
 class ThreadId
 {
 public:
@@ -38,7 +39,7 @@ public:
         auto thread_id = hasher(std::this_thread::get_id());  
 
         // hold all threads because unordered_map has to be updated
-        std::lock_guard<std::mutex> hold(lock);
+        std::lock_guard<Lock> hold(lock);
 
         if (ids.find(thread_id) == ids.end())
             ids[thread_id] = counter++;
@@ -53,7 +54,7 @@ private:
     //       OR
     //       use concurrent data structure
     std::unordered_map<int, int> ids;
-    std::mutex lock;
+    Lock lock;
 };
 
 }

@@ -51,7 +51,7 @@ public:
 
     void lock()
     {
-        auto me = util::ThreadId::instance().get_id();
+        auto me = util::ThreadId<>::instance().get_id();
 
         for (int i = 1; i < N; i++) {
             level[me]->store(i);
@@ -62,7 +62,7 @@ public:
 
     void unlock()
     {
-        auto me = util::ThreadId::instance().get_id();
+        auto me = util::ThreadId<>::instance().get_id();
         level[me]->store(0);
     }
 

@@ -14,7 +14,7 @@ class TwoLock
 public:
     void lock()
     {
-        auto thread_id = util::ThreadId::instance().get_id();
+        auto thread_id = util::ThreadId<>::instance().get_id();
         assert(thread_id <= 1); 
 
         victim.store(thread_id); // let the other go first

@@ -14,7 +14,7 @@ class OneLock
 public:
     void lock()
     {
-        auto i = util::ThreadId::instance().get_id();
+        auto i = util::ThreadId<>::instance().get_id();
         assert(i <= 1);
 
         auto j = 1 - i;
@@ -25,7 +25,7 @@ public:
 
     void unlock()
     {
-        auto i = util::ThreadId::instance().get_id();
+        auto i = util::ThreadId<>::instance().get_id();
         assert(i <= 1);
 
         flags[i].store(false); // unlock

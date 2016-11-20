@@ -8,9 +8,24 @@ string(REPLACE " " "_" ProjectId ${ProjectId})
 # set project name
 project(${ProjectId})
 
-find_package(Threads REQUIRED)
+# modules path
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
+
+set(include_dir "${CMAKE_SOURCE_DIR}/include")
+include_directories(${include_dir})
+message(STATUS "Included directory is: ${include_dir}")
+
 set(CMAKE_CXX_STANDARD 14)
 
+# TESTING
+include(gtest)
+# include(gbenchmark)
+enable_testing()
+add_subdirectory(test)
+
+find_package(Threads REQUIRED)
+
+# third-party code
 # compiler options
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -fmessage-length=0")
 
@@ -22,10 +37,6 @@ message(STATUS "Source files are: ${sourceFiles}")
 
 # set exe name
 set(EXE_NAME "enter")
-
-set(include_dir "${CMAKE_SOURCE_DIR}/include")
-include_directories(${include_dir})
-message(STATUS "Included directory is: ${include_dir}")
 
 # add all source files into executable
 add_executable(${EXE_NAME} ${sourceFiles})
