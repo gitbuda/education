@@ -1,1 +1,1 @@
-# The Art of Multiprocessor Programming in C++
+# Multiprocessor Programming in C++
