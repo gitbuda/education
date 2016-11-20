@@ -1,6 +1,6 @@
 # Cpp Experimental
 
-Dumping ground for all sorts of C++ experiments.
+Dumping ground for all sort of C++ experiments.
 
 How to run?
 ```
