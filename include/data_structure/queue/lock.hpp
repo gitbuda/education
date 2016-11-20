@@ -26,10 +26,10 @@ public:
     {
         std::lock_guard<Lock> hold(lock);
 
-        if (tail - head == items.size())
+        if (tail - head == items.size() && (tail != 0 || head != 0))
             throw exception::FullException();
 
-        items[tail % items.size()] = x;
+        items[tail % items.capacity()] = x;
         ++tail;
     }
 
@@ -41,7 +41,7 @@ public:
             throw exception::EmptyException();
 
         // Item has to be movable type!
-        auto x = std::move(items[head % items.size()]);
+        auto x = std::move(items[head % items.capacity()]);
         head++;
 
         return x;

@@ -8,7 +8,7 @@ TEST(LockQueue, PushPop)
     data_structure::LockQueue<int> queue(1);
     queue.push(1);
     auto value = queue.pop();    
-    ASSERT_EQ(value, 1);
+    EXPECT_EQ(value, 1);
 }
 
 int main(int argc, char *argv[])
