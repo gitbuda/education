@@ -10,6 +10,7 @@
 #include "lock/filter.hpp"
 #include "lock/tas.hpp"
 #include "lock/ttas.hpp"
+#include "lock/backoff.hpp"
 
 #include "util/backoff.hpp"
 
@@ -21,7 +22,8 @@ const int THREAD_NO = 64;
 // Counter<lock::FilterLock> counter_lock {lock::FilterLock(THREAD_NO)};
 // Counter<lock::BakeryLock> counter_lock {lock::BakeryLock(THREAD_NO)};
 // Counter<lock::TASLock> counter_lock;
-Counter<lock::TTASLock> counter_lock;
+// Counter<lock::TTASLock> counter_lock;
+Counter<lock::BackoffLock<>> counter_lock;
 
 void get_and_increment()
 {
@@ -43,9 +45,6 @@ int main(int argc, char **argv)
     } 
 
     std::cout << "COUNT: " << counter_lock.get() << std::endl;
-
-    util::Backoff backoff(2000, 3000);
-    backoff.backoff();
 
     return 0;
 }
