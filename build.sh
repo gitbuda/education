@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # TODO: CMake
+# TODO: generate ycm based on CMake
 
 # compile all c++ files and place executables into the build folder
 for file_full_path in src/*.cpp; do
