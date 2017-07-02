@@ -9,5 +9,5 @@ for file_full_path in src/*.cpp; do
     file_name="${file_full_name%.*}"
     # extension="${file_full_name##*.}"
     echo "TRY: ${file_name}"
-    clang++-3.9 -g -std=c++1z $file_full_path -o build/${file_name}.run
+    g++-7 -g -std=c++1z $file_full_path -o build/${file_name}.run
 done

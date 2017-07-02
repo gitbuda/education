@@ -27,7 +27,7 @@ auto avg(T... t) {
 
 template <typename... T>
 auto print(T &&... t) {
-  (cout << ... << std::string(t) + " ") << endl;
+  (cout << ... << (std::string(t) + " ")) << endl;
 }
 
 template <typename... T>

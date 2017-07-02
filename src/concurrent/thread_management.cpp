@@ -48,7 +48,7 @@ int main() {
   thread3.join();
   thread4.join();
 
-  // using RAII to wait for a thread to complete 
+  // using RAII to wait for a thread to complete
   int local_var = 0;
   Func func(local_var);
   std::thread thread5(func);
