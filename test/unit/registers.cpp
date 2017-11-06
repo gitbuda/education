@@ -3,6 +3,7 @@
 
 #include "registers/sequential.hpp"
 #include "registers/safe_bool_mrsw.hpp"
+#include "registers/regular_bool_mrsw.hpp"
 
 TEST(SequentialRegister, Registers) {
     registers::Sequential<int> reg;
@@ -14,6 +15,12 @@ TEST(SafeBoolMRSW, Registers) {
     registers::SafeBoolMRSW reg(1);
     reg.Write(1);
     ASSERT_EQ(reg.Read(), 1);
+}
+
+TEST(RegularBoolMRSW, Registers) {
+    registers::RegularBoolMRSW reg;
+    reg.Write(true);
+    ASSERT_EQ(reg.Read(), true);
 }
 
 int main(int argc, char *argv[])

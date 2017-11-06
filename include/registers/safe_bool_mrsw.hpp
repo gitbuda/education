@@ -1,6 +1,7 @@
 #pragma once
 
 #include "util/thread_id.hpp"
+#include "registers/register.hpp"
 
 namespace registers
 {
