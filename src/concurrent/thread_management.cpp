@@ -78,6 +78,10 @@ void TestCopy() {
   test_copy_with_move_plus_move_thread.join();
 }
 // https://stackoverflow.com/questions/15990689/stdthread-why-object-is-copied-twice
+// The rule:
+//   * only copy ctor -> 2 copies
+//   * copy ctor + move ctor -> 1 copy + 1 move
+//   * move ctor + explicit std::move -> 2 moves
 // Test Copy
 
 int main() {
