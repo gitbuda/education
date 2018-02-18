@@ -18,7 +18,7 @@ struct Func {
   int &i_;
   Func(int &i) : i_(i) {}
   void operator()() {
-    for (int j = 0; j < 100000; ++j) ThreadWorkI(i_);
+    for (int j = 0; j < i_; ++j) ThreadWorkI(i_);
   }
 };
 
@@ -35,11 +35,59 @@ class ThreadGuard {
   ThreadGuard &operator=(const ThreadGuard &) = delete;
 };
 
+// Test Copy
+// std::thread constructor copies arguments into internal storage by default
+class TestCopyClass {
+ public:
+  TestCopyClass() = default;
+  TestCopyClass(const TestCopyClass &) {
+    std::cout << "Test Copy: [Copy Constructor]" << std::endl;
+  }
+  // TestCopyClass(TestCopyClass &&) = delete; // -> compile time error
+};
+class TestCopyWithMoveClass {
+ public:
+  TestCopyWithMoveClass() = default;
+  TestCopyWithMoveClass(const TestCopyWithMoveClass &) {
+    std::cout << "[Copy Constructor]" << std::endl;
+  }
+  TestCopyWithMoveClass(TestCopyWithMoveClass &&) {
+    std::cout << "[Move Constructor]" << std::endl;
+  }
+};
+void TestCopyFunc(const TestCopyClass &) {
+  std::cout << "Test copy func called." << std::endl;
+}
+void TestCopyWithMoveFunc(const TestCopyWithMoveClass &) {
+  std::cout << "Test copy func called." << std::endl;
+}
+void TestCopy() {
+  TestCopyClass test_copy_obj;
+  std::cout << "# Test Copy Case 1" << std::endl;
+  std::thread test_copy_thread(TestCopyFunc, test_copy_obj);
+  test_copy_thread.join();
+
+  TestCopyWithMoveClass test_copy_with_move_obj;
+  std::cout << "# Test Copy Case 2" << std::endl;
+  std::thread test_copy_with_move_thread(TestCopyWithMoveFunc,
+                                         test_copy_with_move_obj);
+  test_copy_with_move_thread.join();
+  std::cout << "# Test Copy Case 3" << std::endl;
+  std::thread test_copy_with_move_plus_move_thread(
+      TestCopyWithMoveFunc, std::move(test_copy_with_move_obj));
+  test_copy_with_move_plus_move_thread.join();
+}
+// https://stackoverflow.com/questions/15990689/stdthread-why-object-is-copied-twice
+// Test Copy
+
 int main() {
   std::thread thread1(ThreadWork);
-  // function declaration, not a start of a new thread!
+
+  // NOTE!
   // std::thread thread(BackgroundTask());
+  // function declaration, not a start of a new thread!
   std::thread thread2((BackgroundTask()));
+
   std::thread thread3{BackgroundTask()};
   std::thread thread4([] { ThreadWork(); });
 
@@ -49,11 +97,12 @@ int main() {
   thread4.join();
 
   // using RAII to wait for a thread to complete
-  int local_var = 0;
+  int local_var = 5;
   Func func(local_var);
   std::thread thread5(func);
   ThreadGuard g(thread5);
-  // do something in current thread
+
+  TestCopy();
 
   return 0;
 }
