@@ -49,7 +49,7 @@
     (with-standard-io-syntax
       (setf *db* (read in)))))
 
-;;;; #' -> Get me the function with the following name.
+;;; #' -> Get me a function with the following name.
 
 (defun select-by-artist (artist)
   (remove-if-not #'(lambda (cd) (equal (getf cd :artist) artist)) *db*))
@@ -60,11 +60,11 @@
 (defun artist-selector (artist)
   #'(lambda (cd) (equal (getf cd :artist) artist)))
 
-;;;; (select (artist-selector "XYZ"))
+;;; (select (artist-selector "XYZ"))
 
-;;;; &key -> keyword paramaters
-;;;; supplied-p parameter
-;;;; (defun foo (&key a (b 20) (c 30 c-p)) (list a b c c-p))
+;;; &key -> keyword paramaters
+;;; supplied-p parameter
+;;; (defun foo (&key a (b 20) (c 30 c-p)) (list a b c c-p))
 
 (defun where (&key title artist rating (ripped nil ripped-p))
   #'(lambda (cd)
