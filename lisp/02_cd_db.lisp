@@ -49,7 +49,7 @@
     (with-standard-io-syntax
       (setf *db* (read in)))))
 
-;;; #' -> Get me a function with the following name.
+;;; #' -> Get me a function.
 
 (defun select-by-artist (artist)
   (remove-if-not #'(lambda (cd) (equal (getf cd :artist) artist)) *db*))
@@ -63,8 +63,9 @@
 ;;; (select (artist-selector "XYZ"))
 
 ;;; &key -> keyword paramaters
-;;; supplied-p parameter
-;;; (defun foo (&key a (b 20) (c 30 c-p)) (list a b c c-p))
+;;; supplied-p parameter (info whether a parameter is nil by default
+;;;     or a caller explicitly set nil value
+;;; a parameter example -> (name default-value supplied-p-var)
 
 (defun where (&key title artist rating (ripped nil ripped-p))
   #'(lambda (cd)
@@ -73,3 +74,14 @@
         (if artist (equal (getf cd :artist) artist) t)
         (if rating (equal (getf cd :rating) rating) t)
         (if ripped-p (equal (getf cd :ripped) ripped) t))))
+
+(defun update (selector-fn &key title artist rating (ripped nil ripped-p))
+  (setf *db*
+      (mapcar
+        #'(lambda (row)
+            (when (funcall selector-fn row)
+              (if title (setf (getf row :title) rating))
+              (if artist (setf (getf row :artist) rating))
+              (if rating (setf (getf row :rating) rating))
+              (if ripped-p (setf (getf row :ripped) ripped)))
+            row) *db*)))
