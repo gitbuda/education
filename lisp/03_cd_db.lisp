@@ -105,7 +105,7 @@
   (loop while fields
      collecting (make-comparison-expr (pop fields) (pop fields))))
 
-;;; With a &rest in its parameter list, a function or macro can
+;;; With &rest in its parameter list, a function or macro can
 ;;; take an arbitrary number of arguments, which are collected
 ;;; into a single list that becomes the value of the variable
 ;;; whose name follows the &rest
