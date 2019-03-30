@@ -3,11 +3,11 @@
 ## Structure
 
 ai/
-linux/
-programming_languages/
-multiprocessor_programming/
 algorithms_and_data_structures/
 compiler/
+multiprocessor_programming/
+linux/
+programming_languages/
 
 TODOs
 
