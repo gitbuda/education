@@ -5,4 +5,5 @@
 *~
 ve/
 ve3/
+*.run
 __pycache__/
