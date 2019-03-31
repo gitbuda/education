@@ -6,4 +6,6 @@
 ve/
 ve3/
 *.run
+*.pyc
+*.out
 __pycache__/
