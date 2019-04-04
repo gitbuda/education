@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 
+message(STATUS ${CMAKE_CXX_COMPILER})
+
 # set directory name as the project name
 # get directory name
 get_filename_component(ProjectId ${CMAKE_SOURCE_DIR} NAME)
@@ -18,8 +20,10 @@ message(STATUS "Included directory is: ${include_dir}")
 set(CMAKE_CXX_STANDARD 14)
 
 # TESTING
-include(gtest)
 # include(gbenchmark)
+include(gtest)
+# # Doesn't work on newer compilers. On GCC-4.8 is fine.
+# include(relacy)
 enable_testing()
 add_subdirectory(test)
 
