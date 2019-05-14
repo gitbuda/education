@@ -1,0 +1,5 @@
+#!/bin/bash
+
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+java -jar /usr/local/lib/antlr-4.7.1-complete.jar -Dlanguage=Python3 -o ${script_dir}/grammar ${script_dir}/Test.g4
