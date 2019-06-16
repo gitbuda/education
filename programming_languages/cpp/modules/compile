@@ -1,0 +1,5 @@
+#!/bin/bash
+
+clang++ -fmodules-ts --precompile module.cppm -o M.pcm
+clang++ -fmodules-ts -c M.pcm -o M.o
+clang++ -fmodules-ts -fprebuilt-module-path=. M.o main.cpp
