@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ${SCRIPT_DIR}
+
+clang++-6.0 -fcoroutines-ts -stdlib=libc++ -std=c++17 -fuse-ld=lld "$@" \
+    -o ${SCRIPT_DIR}/coroutine.out ${SCRIPT_DIR}/main.cpp \
+    -I${SCRIPT_DIR}/cppcoro/include \
+    -L${SCRIPT_DIR}/cppcoro/build/linux_x64_clang6.0.0_debug/lib -lcppcoro \

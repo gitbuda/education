@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ${SCRIPT_DIR}
+
+rm -rf ${SCRIPT_DIR}/cppcoro
+git clone --recursive https://github.com/lewissbaker/cppcoro.git cppcoro
+
+cd ${SCRIPT_DIR}/cppcoro
+source init.sh
+cake
