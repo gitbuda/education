@@ -5,6 +5,9 @@ from statistics import median
 from math import log2
 import subprocess
 
+import matplotlib.pyplot as plt
+from pyplotcomponents.linear_multiline import LinearMultiline
+
 
 def runs(cmd):
     data = {}
@@ -23,11 +26,31 @@ def runs(cmd):
 rbs_data = runs('./build/rbs')
 fbs_data = runs('./build/fbs')
 
-print("RBS")
+rbs_x = []
+rbs_y_load = []
+rbs_y_total = []
 for size, data in rbs_data.items():
-    print(log2(size), median(
+    rbs_x.append('2^%s' % int(log2(size)))
+    rbs_y_load.append(median(
+        map(lambda x: int(x.split(',')[0]), data)))
+    rbs_y_total.append(median(
         map(lambda x: int(x.split(',')[0]) + int(x.split(',')[1]), data)))
 
-print("FBS")
+fbs_x = []
+fbs_y = []
 for size, data in fbs_data.items():
-    print(log2(size), median(map(lambda x: int(x), data)))
+    fbs_x.append('2^%s' % int(log2(size)))
+    fbs_y.append(median(map(lambda x: int(x), data)))
+
+fig = plt.figure(figsize=(10, 10))
+chart = LinearMultiline(
+    fig,
+    'RAM vs fseek Binary Search',
+    'Size',
+    'Time (ns)',
+    grid=True)
+chart.plot(rbs_x, rbs_y_load, '-', label='RAM Load')
+chart.plot(rbs_x, rbs_y_total, '-', label='RAM Load + Binary Search')
+chart.plot(fbs_x, fbs_y, '-', label='fseek Binary Search')
+chart.add_legend()
+chart.show_or_save()
