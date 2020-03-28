@@ -1,5 +1,5 @@
 macro(run_conan)
-# Download automatically, you can also just copy the conan.cmake file
+# Download automatically, you can also just copy the conan.cmake file.
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
   message(
     STATUS
@@ -23,7 +23,7 @@ conan_cmake_run(
   OPTIONS
   ${CONAN_EXTRA_OPTIONS}
   BASIC_SETUP
-  CMAKE_TARGETS # individual targets to link to
+  CMAKE_TARGETS # Individual targets to link to.
   BUILD
   missing)
 endmacro()

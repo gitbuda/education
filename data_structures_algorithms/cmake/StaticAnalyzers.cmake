@@ -9,7 +9,6 @@ if(ENABLE_CPPCHECK)
     message(SEND_ERROR "cppcheck requested but executable not found")
   endif()
 endif()
-
 if(ENABLE_CLANG_TIDY)
   find_program(CLANGTIDY clang-tidy)
   if(CLANGTIDY)
@@ -18,5 +17,3 @@ if(ENABLE_CLANG_TIDY)
     message(SEND_ERROR "clang-tidy requested but executable not found")
   endif()
 endif()
-
-

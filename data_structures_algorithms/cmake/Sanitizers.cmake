@@ -1,5 +1,4 @@
 function(enable_sanitizers project_name)
-
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL
                                              "Clang")
     option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
@@ -44,5 +43,4 @@ function(enable_sanitizers project_name)
                             INTERFACE -fsanitize=${LIST_OF_SANITIZERS})
     endif()
   endif()
-
 endfunction()
