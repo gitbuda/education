@@ -3,8 +3,6 @@
 
 namespace dsa::bit {
 
-/// TODO: Document.
-// TODO: Add concept.
 template<typename T>
 constexpr auto LowestSetBitInBase10Value(T x) {
   static_assert(std::is_unsigned<T>::value, "Has to be unsigned.");
