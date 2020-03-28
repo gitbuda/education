@@ -2,16 +2,29 @@
 
 namespace dsa::union_find {
 
+/// Quick Find Idea: All connected elements have the same value id.
+///
 /// @tparam T is type of elements.
 template<typename T>
 class QuickFindUnionFind {
 public:
+  /// Initialize container of elements of size n {0, 1, 2, ...}.
+  /// Each element is a standalone connected component.
   explicit QuickFindUnionFind(T n) : id_(n), count_{n} {
     std::iota(std::begin(id_), std::end(id_), 0);
   }
+
+  /// Are p and q connected.
   auto Connected(T p, T q) const { return this->Find(p) == this->Find(q); }
+
+  /// Number of connected components.
   auto Count() const { return this->count_; }
+
+  /// Find component id by just looking at underlying index.
   auto Find(T p) const { return id_[p]; }
+
+  /// Join p and q by assigning one of underlying component id to all
+  /// elements belonging to the other component.
   auto Union(T p, T q) {
     auto pId = this->Find(p);
     auto qId = this->Find(q);

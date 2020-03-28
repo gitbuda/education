@@ -2,10 +2,10 @@
 
 #include "union_find/quick_find.hpp"
 #include "union_find/quick_union.hpp"
+#include "union_find/weighted_quick_union.hpp"
 
-TEST_CASE("Union Find Quick Find") {
-  dsa::union_find::QuickFindUnionFind uf(9U); // NOLINT
-
+template<typename TUnionFind>
+void Test(TUnionFind& uf) {
   uf.Union(0, 3); // NOLINT
   REQUIRE(uf.Count() == 8); // NOLINT
   REQUIRE(uf.Connected(0, 3) == true); // NOLINT
@@ -46,15 +46,19 @@ TEST_CASE("Union Find Quick Find") {
   uf.Union(2, 1); // NOLINT
   REQUIRE(uf.Count() == 1); // NOLINT
   REQUIRE(uf.Connected(8, 0) == true); // NOLINT
+}
 
-  // TODO: Check for one more.
+TEST_CASE("Union Find Quick Find") {
+  dsa::union_find::QuickFindUnionFind uf(9U); // NOLINT
+  Test(uf);
 }
 
 TEST_CASE("Union Find Quick Union") {
-  dsa::union_find::QuickUnionUnionFind uf(10U); // NOLINT
-  uf.Union(1, 3); // NOLINT
-  uf.Union(3, 4); // NOLINT
-  REQUIRE(uf.Connected(1, 4) == true); // NOLINT
+  dsa::union_find::QuickUnionUnionFind uf(9U); // NOLINT
+  Test(uf);
+}
 
-  // TODO: Add more.
+TEST_CASE("Union Find Weighted Quick Union") {
+  dsa::union_find::WeightedQuickUnionUnionFind uf(9U); // NOLINT
+  Test(uf);
 }

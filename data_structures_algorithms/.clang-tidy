@@ -1,7 +1,13 @@
 ---
-Checks:            '*,-fuchsia-*,-google-*,-zircon-*,-abseil-*,-modernize-use-trailing-return-type,-llvm-*'
-WarningsAsErrors:  '1'
+Checks: '*,
+        -abseil-*,
+        -fuchsia-*,
+        -google-*,
+        -llvm-*',
+        -modernize-use-trailing-return-type,
+        -zircon-*
+WarningsAsErrors: '1'
 HeaderFilterRegex: ''
-FormatStyle:       none
+FormatStyle: none
 
 
