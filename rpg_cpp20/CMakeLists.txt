@@ -68,5 +68,4 @@ if(ENABLE_FUZZING)
   add_subdirectory(fuzz_test)
 endif()
 
-
 add_subdirectory(src)

@@ -21,14 +21,10 @@ int main()
     while (window.pollEvent(event)) {
       ImGui::SFML::ProcessEvent(event);
 
-      if (event.type == sf::Event::Closed) {
-        window.close();
-      }
+      if (event.type == sf::Event::Closed) { window.close(); }
     }
 
     ImGui::SFML::Update(window, deltaClock.restart());
-
-//    ImGui::ShowDemoWindow();
 
     ImGui::Begin("Hello, world!");
     ImGui::Button("Look at this pretty button");

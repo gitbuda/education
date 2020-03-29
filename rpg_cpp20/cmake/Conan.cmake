@@ -13,8 +13,10 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_add_remote(NAME bincrafters URL
                  https://api.bintray.com/conan/bincrafters/public-conan)
 
+option(CONAN_PROFILE "Set Conan profile" "default")
 conan_cmake_run(
-  PROFILE rpg_cpp20
+  PROFILE
+  ${CONAN_PROFILE}
   REQUIRES
   ${CONAN_EXTRA_REQUIRES}
   catch2/2.11.0
