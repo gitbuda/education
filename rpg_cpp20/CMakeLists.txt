@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
+
 # Set the project name to your project name, my project isn't very descriptive
 project(myproject CXX)
 include(cmake/StandardProjectSettings.cmake)
