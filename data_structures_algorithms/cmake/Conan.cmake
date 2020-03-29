@@ -13,7 +13,7 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_add_remote(NAME bincrafters URL
                  https://api.bintray.com/conan/bincrafters/public-conan)
 
-option(CONAN_PROFILE "Set Conan profile" "default")
+set(CONAN_PROFILE "" CACHE STRING "Set Conan profile")
 conan_cmake_run(
   PROFILE
   ${CONAN_PROFILE}
