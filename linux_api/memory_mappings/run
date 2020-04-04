@@ -1,0 +1,13 @@
+#!/bin/bash
+
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+mkdir -p ${script_dir}/build
+cd ${script_dir}/build
+
+rm test.bin
+dd if=/dev/zero of=test.bin bs=1 count=$(getconf PAGE_SIZE)
+od -c -w8 test.bin
+
+./p2 test.bin &
+sleep 4
+./p1 test.bin
