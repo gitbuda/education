@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Pecha Kucha Timer</string>
+    <string name="reset_button_text">RESET</string>
+</resources>
