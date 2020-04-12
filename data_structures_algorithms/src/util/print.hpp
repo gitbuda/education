@@ -20,4 +20,4 @@ auto Println(T &&... t) {
   Println();
 }
 
-}// namespace dsa::util
+} // namespace dsa::util

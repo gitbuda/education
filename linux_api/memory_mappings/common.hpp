@@ -15,21 +15,22 @@ void ErrorExit(const std::string &message) {
   std::exit(1);
 }
 
-void FileWrite(const std::filesystem::path &path,
-               const std::vector<std::uint8_t> &data) {
+void FileWrite(
+    const std::filesystem::path &path,
+    const std::vector<std::uint8_t> &data) {
   assert(data.size() > 0);
   std::ofstream file(path, std::ios_base::binary);
   assert(file.is_open());
-  file.write(reinterpret_cast<const char *>(data.data()),
-             data.size() * sizeof(data[0]));
+  file.write(
+      reinterpret_cast<const char *>(data.data()),
+      data.size() * sizeof(data[0]));
   file.close();
 }
 
 std::vector<std::uint8_t> FileRead(const std::filesystem::path &path) {
   std::ifstream file(path, std::ios::in | std::ios::binary);
   std::vector<std::uint8_t> data(
-      (std::istreambuf_iterator<char>(file)),
-      std::istreambuf_iterator<char>());
+      (std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
   return data;
 }
 

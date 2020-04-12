@@ -15,16 +15,10 @@ int main(int argc, char *argv[]) {
 
   std::filesystem::path file(argv[1]);
   int fd = open(file.c_str(), O_RDONLY);
-  if (fd == -1) {
-    ErrorExit("Failed to open file.");
-  }
+  if (fd == -1) { ErrorExit("Failed to open file."); }
   void *addr = mmap(NULL, getpagesize(), PROT_READ, MAP_PRIVATE, fd, 0);
-  if (addr == MAP_FAILED) {
-    ErrorExit("mmap failed.");
-  }
-  if (close(fd) == -1) {
-    ErrorExit("Failed to close file.");
-  }
+  if (addr == MAP_FAILED) { ErrorExit("mmap failed."); }
+  if (close(fd) == -1) { ErrorExit("Failed to close file."); }
 
   int cnt = 0;
   while (MemoryRead(addr, pid.size()) != pid) {
