@@ -1,0 +1,2 @@
+%cpp -std=c++2a
+%hpp -x c++-header
