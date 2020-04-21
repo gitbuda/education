@@ -1,4 +1,4 @@
-# Set a default build type if none was specified
+# Set a default build type if none was specified.
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(
     STATUS "Setting build type to 'RelWithDebInfo' as none was specified.")
@@ -19,7 +19,7 @@ else()
 endif()
 
 # Generate compile_commands.json to make it easier to work with clang based
-# tools
+# tools.
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(ENABLE_IPO
