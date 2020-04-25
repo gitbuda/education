@@ -21,10 +21,10 @@ int main() {
   // // Change default locale.
   std::wcout.imbue(std::locale("en_US.UTF-8"));
 
-  unsigned char lion_utf8[] = {0xF0, 0x9F, 0xA6, 0x81, 0x00};
+  std::array<uint8_t, 5> lion_utf8 = {0xF0, 0x9F, 0xA6, 0x81, 0x00}; // NOLINT
 
   // Save as string.
-  std::string lion_str = std::string((char *)lion_utf8);
+  std::string lion_str = std::string(std::begin(lion_utf8), std::end(lion_utf8));
   std::cout << lion_str << " string size: " << lion_str.size() << std::endl;
 
   // Save as wide string.

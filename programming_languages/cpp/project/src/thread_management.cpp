@@ -10,35 +10,37 @@ void ThreadWork() { cout << "some work" << endl; }
 void ThreadWorkI(int i) { cout << "some work: " << i << endl; }
 
 class BackgroundTask {
- public:
+public:
   void operator()() const { ThreadWork(); }
 };
 
 struct Func {
-  int &i_;
-  Func(int &i) : i_(i) {}
-  void operator()() {
-    for (int j = 0; j < i_; ++j) ThreadWorkI(i_);
+  int &i_; // NOLINT
+  explicit Func(int &i) : i_(i) {}
+  void operator()() const {
+    for (int j = 0; j < i_; ++j) { ThreadWorkI(i_); }
   }
 };
 
 class ThreadGuard {
- private:
+private:
   std::thread &t_;
 
- public:
+public:
   explicit ThreadGuard(std::thread &t) : t_(t) {}
   ~ThreadGuard() {
-    if (t_.joinable()) t_.join();
+    if (t_.joinable()) { t_.join(); }
   }
   ThreadGuard(const ThreadGuard &) = delete;
   ThreadGuard &operator=(const ThreadGuard &) = delete;
+  ThreadGuard(ThreadGuard &&) = delete;
+  ThreadGuard &operator=(ThreadGuard &&) = delete;
 };
 
 // Test Copy
 // std::thread constructor copies arguments into internal storage by default
 class TestCopyClass {
- public:
+public:
   TestCopyClass() = default;
   TestCopyClass(const TestCopyClass &) {
     std::cout << "Test Copy: [Copy Constructor]" << std::endl;
@@ -46,7 +48,7 @@ class TestCopyClass {
   // TestCopyClass(TestCopyClass &&) = delete; // -> compile time error
 };
 class TestCopyWithMoveClass {
- public:
+public:
   TestCopyWithMoveClass() = default;
   TestCopyWithMoveClass(const TestCopyWithMoveClass &) {
     std::cout << "[Copy Constructor]" << std::endl;
@@ -55,9 +57,7 @@ class TestCopyWithMoveClass {
     std::cout << "[Move Constructor]" << std::endl;
   }
 };
-void TestCopyFunc(const TestCopyClass &) {
-  std::cout << "Test copy func called." << std::endl;
-}
+void TestCopyFunc(const TestCopyClass &) { std::cout << "Test copy func called." << std::endl; }
 void TestCopyWithMoveFunc(const TestCopyWithMoveClass &) {
   std::cout << "Test copy func called." << std::endl;
 }
@@ -69,8 +69,7 @@ void TestCopy() {
 
   TestCopyWithMoveClass test_copy_with_move_obj;
   std::cout << "# Test Copy Case 2" << std::endl;
-  std::thread test_copy_with_move_thread(TestCopyWithMoveFunc,
-                                         test_copy_with_move_obj);
+  std::thread test_copy_with_move_thread(TestCopyWithMoveFunc, test_copy_with_move_obj);
   test_copy_with_move_thread.join();
   std::cout << "# Test Copy Case 3" << std::endl;
   std::thread test_copy_with_move_plus_move_thread(

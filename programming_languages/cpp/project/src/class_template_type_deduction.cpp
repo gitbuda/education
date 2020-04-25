@@ -1,12 +1,12 @@
 #include <iostream>
 #include <tuple>
 
-template <class X, class Y>
+template<class X, class Y>
 struct A {
   A(X x, Y y) : x(x), y(y) {}
 
-  X x;
-  Y y;
+  X x; // NOLINT
+  Y y; // NOLINT
 };
 
 int main() {

@@ -1,8 +1,65 @@
+add_executable(class_template_type_deduction class_template_type_deduction.cpp)
+target_link_libraries(class_template_type_deduction PRIVATE project_options project_warnings)
+
+add_executable(crtp crtp.cpp)
+target_link_libraries(crtp PRIVATE project_options project_warnings)
+
+add_executable(demangle demangle.cpp)
+target_link_libraries(demangle PRIVATE project_options project_warnings)
+
+add_executable(fold_expressions fold_expressions.cpp)
+target_link_libraries(fold_expressions PRIVATE project_options project_warnings)
+
+add_executable(nested_namespaces nested_namespaces.cpp)
+target_link_libraries(nested_namespaces PRIVATE project_options project_warnings)
+
+add_executable(nodiscard nodiscard.cpp)
+target_link_libraries(nodiscard PRIVATE project_options project_warnings)
+
+add_executable(pass_key pass_key.cpp)
+target_link_libraries(pass_key PRIVATE project_options project_warnings)
+
+add_executable(safe_reinterpret safe_reinterpret.cpp)
+target_link_libraries(safe_reinterpret PRIVATE project_options project_warnings)
+
+add_executable(stateful_lambda stateful_lambda.cpp)
+target_link_libraries(stateful_lambda PRIVATE project_options project_warnings)
+
+add_executable(std_clamp std_clamp.cpp)
+target_link_libraries(std_clamp PRIVATE project_options project_warnings)
+
+add_executable(std_hash std_hash.cpp)
+target_link_libraries(std_hash PRIVATE project_options project_warnings)
+
+add_executable(std_in_place std_in_place.cpp)
+target_link_libraries(std_in_place PRIVATE project_options project_warnings)
+
+add_executable(std_search std_search.cpp)
+target_link_libraries(std_search PRIVATE project_options project_warnings)
+
+add_executable(string_view string_view.cpp)
+target_link_libraries(string_view PRIVATE project_options project_warnings)
+
+add_executable(structured_concurrency structured_concurrency.cpp)
+target_link_libraries(structured_concurrency PRIVATE project_options project_warnings Threads::Threads)
+
 add_executable(template_function template_function.cpp)
 target_link_libraries(
   template_function PRIVATE project_options project_warnings
   CONAN_PKG::docopt.cpp CONAN_PKG::fmt CONAN_PKG::spdlog
   CONAN_PKG::boost_type_index)
 
+add_executable(template_metaprogramming template_metaprogramming.cpp)
+target_link_libraries(template_metaprogramming PRIVATE project_options project_warnings)
+
+add_executable(template_template_parameters template_template_parameters.cpp)
+target_link_libraries(template_template_parameters PRIVATE project_options project_warnings)
+
+add_executable(thread_management thread_management.cpp)
+target_link_libraries(thread_management PRIVATE project_options project_warnings Threads::Threads)
+
 add_executable(variant variant.cpp)
 target_link_libraries(variant PRIVATE project_options project_warnings)
+
+add_executable(unicode unicode.cpp)
+target_link_libraries(unicode PRIVATE project_options project_warnings)

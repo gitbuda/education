@@ -6,14 +6,14 @@
 // nested namespace
 namespace io::network::test {
 struct IOStruct {
-  int b;
+  int b; // NOLINT
 };
-}
+} // namespace io::network::test
 
 int main() {
   // nested namespace
-  io::network::test::IOStruct a;
-  a.b = 10;
+  io::network::test::IOStruct a{0};
+  a.b = 1;
   std::cout << a.b << std::endl;
 
   return 0;

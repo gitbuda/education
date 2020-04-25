@@ -36,17 +36,15 @@ int main() {
 
   // because std::unique_ptr is not copyable the labmda has the same
   // property
-  auto non_copy_lambda = [ e = 0, p = std::make_unique<int>(2) ]() mutable {
-    return ++e;
-  };
+  auto non_copy_lambda = [e = 0, p = std::make_unique<int>(2)]() mutable { return ++e; };
   // auto lambda_copy = non_copy_lambda;
 
   // fibonacci lambda
-  auto fibb_lambda = [ i = 0, j = 1 ]() mutable {
+  auto fibb_lambda = [i = 0, j = 1]() mutable {
     i = std::exchange(j, j + i);
     return i;
   };
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < 10; ++i) { // NOLINT
     cout << fibb_lambda() << " ";
   }
   cout << endl;

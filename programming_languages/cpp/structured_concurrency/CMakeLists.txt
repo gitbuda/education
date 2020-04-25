@@ -1,5 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project(structured_concurrency)
-find_package(Threads REQUIRED)
-add_executable(structured_concurrency main.cpp)
-target_link_libraries(structured_concurrency Threads::Threads)

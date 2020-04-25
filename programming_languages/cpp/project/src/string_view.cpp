@@ -12,8 +12,7 @@ int main() {
   std::cout << str_view << std::endl;
 
   // Update only view.
-  str_view.remove_prefix(
-      std::min(str_view.find_first_not_of(" "), str_view.size()));
+  str_view.remove_prefix(std::min(str_view.find_first_not_of(" "), str_view.size()));
   std::cout << str_view << std::endl;
 
   std::cout << str_array << std::endl;

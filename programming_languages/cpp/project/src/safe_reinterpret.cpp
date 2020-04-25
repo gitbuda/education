@@ -20,8 +20,7 @@
 //   return reinterpret_cast<To>(from);
 // }
 
-// TODO: make static assert
-template <class From, class To>
+template<class From, class To>
 To safe_reinterpret_cast(From from) {
   static_assert(sizeof(From) <= sizeof(To), "Destination type too narrow");
   return reinterpret_cast<To>(from);
@@ -32,8 +31,8 @@ int main() {
   using To = uint16_t;
   std::cout << "sizeof(From): " << sizeof(From) << std::endl;
   std::cout << "sizeof(To): " << sizeof(To) << std::endl;
-  From *x = new From(100000000);
-  auto y = safe_reinterpret_cast<From *, To *>(x);
+  From *x = new From(100000000); // NOLINT
+  auto *y = safe_reinterpret_cast<From *, To *>(x);
   std::cout << "x: " << *x << std::endl;
   std::cout << "y: " << *y << std::endl;
   return 0;

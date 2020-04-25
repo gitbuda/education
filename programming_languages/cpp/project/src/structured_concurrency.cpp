@@ -10,29 +10,33 @@
 #include <thread>
 #include <vector>
 
-// TODO: Implement generic StartSoon method.
-// TODO: Find a way how to disable direct access to threads.
+// TODO(gitbuda): Implement generic StartSoon method.
+// TODO(gitbuda): Find a way how to disable direct access to threads.
 
 class Nursery {
- public:
-  void StartSoon(std::function<void()> task) {
-    tasks.push_back(std::thread(task));
-  }
+public:
+  Nursery() = default;
+  Nursery(const Nursery &) = default;
+  Nursery(Nursery &&) = default;
+  Nursery &operator=(const Nursery &) = default;
+  Nursery &operator=(Nursery &&) = default;
+
+  void StartSoon(const std::function<void()> &task) { tasks.emplace_back(std::thread(task)); }
 
   ~Nursery() {
     for (auto &task : tasks) {
-      if (task.joinable()) task.join();
+      if (task.joinable()) { task.join(); }
     }
   }
 
- private:
+private:
   std::vector<std::thread> tasks;
 };
 
 int main() {
   {
     Nursery nursery;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i) { // NOLINT
       nursery.StartSoon([i]() { std::cout << "Task " << i << std::endl; });
     }
   }

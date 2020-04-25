@@ -7,7 +7,7 @@
 int main() {
   int x = 1;
 
-  std::cout << std::clamp(x, 2, 5) << std::endl;
+  std::cout << std::clamp(x, 2, 5) << std::endl; // NOLINT
 
   return 0;
 }

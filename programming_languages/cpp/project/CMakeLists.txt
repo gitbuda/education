@@ -47,6 +47,8 @@ set(CONAN_EXTRA_REQUIRES ${CONAN_EXTRA_REQUIRES}
 include(cmake/Conan.cmake)
 run_conan()
 
+find_package(Threads REQUIRED)
+
 if(ENABLE_TESTING)
   enable_testing()
   message(
