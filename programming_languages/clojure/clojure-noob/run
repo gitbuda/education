@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+lein install
+lein run test1 test2
