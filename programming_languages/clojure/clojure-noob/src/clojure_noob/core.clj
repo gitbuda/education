@@ -1,5 +1,7 @@
 ;; https://www.braveclojure.com/do-things/
 
+;; https://clojure.org/guides/weird_characters
+
 (use 'clojure.repl)
 
 (ns clojure-noob.core
@@ -13,7 +15,15 @@
          "Fatal")))
 (error-message :mild)
 
+;; https://clojure.org/guides/threading_macros
+(-> "1" (str "2") (str "3")) ;; 123
+(->> "1" (str "2") (str "3")) ;; 321
+
 {}
+
+(= "0" "0")
+(if true true false)
+(do (if () true false))
 
 (def data-map (hash-map :a 1 :b 2))
 (println (get data-map :a))
