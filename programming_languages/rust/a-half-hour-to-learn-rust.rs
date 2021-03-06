@@ -72,6 +72,18 @@ impl std::ops::Neg for Number {
 // }
 // impl std::marker::Copy for Number {}
 
+#[derive(Debug)]
+struct NonCopyNumber {
+    odd: bool,
+    value: i32,
+}
+
+impl std::fmt::Display for NonCopyNumber {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.odd, self.value)
+    }
+}
+
 struct Pair<T> {
     a: T,
     b: T,
@@ -114,6 +126,62 @@ struct NumRef<'a, T> {
 
 fn as_num_ref<'a, T>(x: &'a T) -> NumRef<'a, T> {
     NumRef { x: &x }
+}
+
+fn number_value<'lifetime>(num1: &'lifetime NonCopyNumber, num2: &NonCopyNumber) -> &'lifetime i32 {
+    &num1.value
+}
+
+#[derive(Debug)]
+struct RefStrPerson<'a> {
+    name: &'a str,
+}
+impl std::fmt::Display for RefStrPerson<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Person (name: {})", self.name)
+    }
+}
+
+#[derive(Debug)]
+struct Person {
+    name: String,
+}
+impl std::fmt::Display for Person {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Person (name: {})", self.name)
+    }
+}
+
+fn hardcoded_utf8_example() -> Result<&'static str, std::str::Utf8Error> {
+    match std::str::from_utf8(&[240, 159, 141, 137]) {
+    // match std::str::from_utf8(&[195, 40]) {
+        Ok(s) => return Ok(s),
+        Err(e) => return Err(e),
+    }
+}
+fn hardcoded_utf8_example_short() -> Result<&'static str, std::str::Utf8Error> {
+    let s = std::str::from_utf8(&[240, 159, 141, 137])?;
+    Ok(s)
+}
+
+fn countdown<F>(count: usize, tick: F)
+    where F: Fn(usize)
+{
+    for i in (1..=count).rev() {
+        tick(i);
+    }
+}
+
+fn make_tester_move(answer: String) -> impl Fn(&str) -> bool {
+    move |challenge| {
+        challenge == answer
+    }
+}
+// fn make_tester_ref<'a>(answer: &'a str) -> impl Fn(&str) -> bool + 'a {
+fn make_tester_ref(answer: &str) -> impl Fn(&str) -> bool + '_ {
+    move |challenge| {
+        challenge == answer
+    }
 }
 
 fn main() {
@@ -205,4 +273,42 @@ fn main() {
     let x_ref = as_num_ref(&x);
     // x = 100;
     dummy_print(x_ref.x);
+
+    // Arguments lifetime example.
+    let n1 = NonCopyNumber { odd: false, value: 1000 };
+    let n2 = NonCopyNumber { odd: false, value: 2000 };
+    let n3 = number_value(&n1, &n2);
+    let n4 = n2;
+    dummy_print(n3);
+    dummy_print(n4);
+
+    let name = format!("fasterthan{}", "lime");
+    let p = RefStrPerson { name: &name };
+    dummy_print(p);
+
+    let name = format!("fasterthan{}", "lime");
+    let p = Person { name };
+    dummy_print(p);
+    // dummy_print(name);
+
+    let vec = 1..5;
+    print_type_name(&vec);
+
+    // let result = hardcoded_utf8_example();
+    let result = hardcoded_utf8_example_short();
+    match result {
+        Ok(s) => println!("{}", s),
+        Err(e) => panic!(e),
+    }
+
+    countdown(3, |i| println!("tick {}...", i));
+    countdown(3, |_| ());
+
+    let test = make_tester_move("hunter2".into());
+    println!("{}", test("******"));
+    println!("{}", test("hunter2"));
+
+    let test = make_tester_ref("hunter2");
+    println!("{}", test("*******"));
+    println!("{}", test("hunter2"));
 }
