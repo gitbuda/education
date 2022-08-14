@@ -38,5 +38,4 @@ std::string RenderTableRow(
   }
   return RanderRow(row, delimiter);
 }
-
 } // namespace util

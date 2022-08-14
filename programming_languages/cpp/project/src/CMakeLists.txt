@@ -63,3 +63,6 @@ target_link_libraries(variant PRIVATE project_options project_warnings)
 
 add_executable(unicode unicode.cpp)
 target_link_libraries(unicode PRIVATE project_options project_warnings)
+
+add_executable(circular circular.cpp)
+target_link_libraries(circular PRIVATE project_options project_warnings)

@@ -12,7 +12,10 @@ endif()
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 conan_add_remote(NAME bincrafters URL
-                 https://api.bintray.com/conan/bincrafters/public-conan)
+                 https://bincrafters.jfrog.io/artifactory/api/conan/public-conan)
+
+# TODO: Enable revisions support on the client.
+# `conan config _set general.revisions_enabled=1`
 
 set(CONAN_PROFILE "default" CACHE STRING "Set conan profile")
 conan_cmake_run(
@@ -22,8 +25,8 @@ conan_cmake_run(
   ${CONAN_EXTRA_REQUIRES}
   catch2/2.11.0
   docopt.cpp/0.6.2
-  fmt/6.1.2
-  spdlog/1.5.0
+  fmt/9.0.0
+  spdlog/1.10.0
   OPTIONS
   ${CONAN_EXTRA_OPTIONS}
   BASIC_SETUP
