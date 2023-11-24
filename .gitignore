@@ -9,3 +9,4 @@ ve3/
 *.pyc
 *.out
 __pycache__/
+.DS_Store
