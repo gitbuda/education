@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from math import factorial
 import csv
 import scipy
+import argparse
 
 
 # FROM: https://scipy.github.io/old-wiki/pages/Cookbook/SavitzkyGolay
@@ -78,20 +79,47 @@ def savitzky_golay(y, window_size, order, deriv=0, rate=1):
      return np.convolve( m[::-1], y, mode='valid')
 
 
-x = []
-y = []
-with open('smooth.csv') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=',')
-    data = list([x for x in spamreader][1:])
-    for row in data:
-        x.append(float(row[0]))
-        y.append(float(row[1].replace(",","")))
+def data_1():
+    x = []
+    y = []
+    with open('smooth.csv') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',')
+        data = list([x for x in spamreader][1:])
+        for row in data:
+            x.append(float(row[0]))
+            y.append(float(row[1].replace(",","")))
+    x = np.array(x)
+    y = np.array(y)
+    # yhat = scipy.signal.savgol_filter(y, 31, 2)
+    yhat = savitzky_golay(y, 31 , 2)
+    plt.plot(x,y)
+    plt.plot(x,yhat, color='red')
+    plt.show()
 
-x = np.array(x)
-y = np.array(y)
-# yhat = scipy.signal.savgol_filter(y, 31, 2)
-yhat = savitzky_golay(y, 31 , 2)
 
-plt.plot(x,y)
-plt.plot(x,yhat, color='red')
-plt.show()
+# TODO(gitbuda): Implement skip x values (e.g. if x are dates -> x axis is a huge mess).
+def smooth(csv_file_path, x_axis_column_name, y_axis_column_name):
+    x = []
+    y = []
+    with open(csv_file_path) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            print(row)
+            x.append(row[x_axis_column_name])
+            y.append(float(row[y_axis_column_name]))
+    x = np.array(x)
+    y = np.array(y)
+    # yhat = scipy.signal.savgol_filter(y, 31, 2)
+    yhat = savitzky_golay(y, 31 , 2)
+    plt.plot(x,y)
+    plt.plot(x,yhat, color='red')
+    plt.show()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--path")
+    parser.add_argument("--x")
+    parser.add_argument("--y")
+    args = parser.parse_args()
+    smooth(args.path, args.x, args.y)
